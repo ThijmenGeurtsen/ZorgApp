@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="json-simple-1.1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Documents/simple_jar/json-simple-1.1.1.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/simple_jar/hamcrest-core-1.1.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/simple_jar/junit-4.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Documents/simple_jar/hamcrest-core-1.1.jar!/" />
+    </SOURCES>
+  </library>
+</component>

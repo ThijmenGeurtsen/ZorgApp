@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Sprint1:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Sprint1_jar</output-path>
+    <root id="archive" name="Sprint1.jar">
+      <element id="module-output" name="Sprint1" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/simple_jar/junit-4.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/simple_jar/json-simple-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/simple_jar/hamcrest-core-1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
