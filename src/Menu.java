@@ -12,6 +12,8 @@ public class Menu {
     public JSON json = new JSON();
     private Scanner scannerObject = new Scanner(System.in);  // Create a Scanner
     private List<String> infoTypes = Arrays.asList("firstName","lastName","length","weight","age","BMI","medicine");
+    public EditType Edit = new EditType();
+    public DisplayTypes Display = new DisplayTypes();
 
 
     //////////////////////////////////////
@@ -20,7 +22,7 @@ public class Menu {
     public void pMain() {
         while (true) {
             int index = pSelectProfile();
-            if (index == 0){
+            if (index == -1){
                 break;
             }
             while(true) {
@@ -35,7 +37,7 @@ public class Menu {
 
                 }
                 if (option.equals("2")) {
-                    selectEditType(index, Arrays.asList("firstName"));
+                    Edit.editMain(index, Arrays.asList("firstName"));
                 }
             }
         }
@@ -59,7 +61,7 @@ public class Menu {
             String name = enter_name.nextLine();  // Read user input
 
             if (name.equals("0")){ //makes it break in the main function
-                return 0;
+                return -1;
             }
             //if name exists return index
             if (json.check_name(name) == true) {
@@ -78,7 +80,7 @@ public class Menu {
     public void main(){
         while(true) {
             int index = selectProfile(Boolean.TRUE);
-            if (index == 0){
+            if (index == -1){
                 break;
             }
             while (true) {
@@ -93,77 +95,100 @@ public class Menu {
 
                 }
                 if (option.equals("2")) {
-                    selectEditType(index, Arrays.asList("firstName", "lastName", "length", "weight", "age", "BMI", "medication"));
+                    Edit.editMain(index, Arrays.asList("firstName", "lastName", "length", "weight", "age", "BMI", "medication"));
                 }
             }
         }
 
     }
-    public void selectEditType(int index, List<String> allowedToEdit){
-        while (loop==0){
-            ////////////////////////////////
-            //select option to edit
-            //////////////////////////////
+
+    public class EditType {
+        public void displayList(int index, List<String> allowedToEdit){
+            for (int i = 0; i < allowedToEdit.size(); i++) {
+                //print out different statement for medication
+                if (allowedToEdit.get(i).equals("medication")) {
+                    System.out.println("Press " + (i + 1) + " to edit "
+                            + allowedToEdit.get(i)
+                            + ": " +
+                            json.medicationList(index));
+
+                } else {
+                    System.out.println("Press " + (i + 1) + " to edit "
+                            + allowedToEdit.get(i)
+                            + ": " +
+                            json.get_string_i(index, allowedToEdit.get(i)));
+
+                }
+
+            }
+        }
+        public void editString(int index, List<String> allowedToEdit, int intInput){
+            //edit selected variable
             small_func.clearScreen();
             small_func.line();
-            System.out.println("Press 0 to go back.");
-            System.out.println();
-            for(int i=0 ;i<allowedToEdit.size() ;i++ ) {
-                System.out.println("Press " + (i + 1) + " to edit "
-                        + allowedToEdit.get(i)
-                        + ": " +
-                        json.get_string_i(index, allowedToEdit.get(i)));
-            }
-
-            /////////////
-            ///medicine
-            /////////////
-
-            small_func.line();
+            System.out.println("Current " + allowedToEdit.get(intInput - 1) + " is "
+                    + json.get_string_i(index, allowedToEdit.get(intInput - 1)));
 
             //get user input
-            System.out.println("Enter number:");
-            String userInput = scannerObject.nextLine();  // Read user input
+            System.out.println("What would you like to edit it to:");
+            String editTo = scannerObject.nextLine();  // Read user input
 
-            //check input and convert to int
-            int intInput = 0;
-            try{
-                intInput=Integer.parseInt(userInput);
-                //check if should go back
-                System.out.println(allowedToEdit.get(intInput-1));
-                if (allowedToEdit.get(intInput-1)=="medication"){
-                    medicine(index);
+            //update json file
+            String edit = allowedToEdit.get(intInput - 1);
+            json.updateVariable(index, edit, editTo);
+        }
+        public void editMain(int index, List<String> allowedToEdit) {
+            while (true) {
+                ////////////////////////////////
+                //select option to edit
+                //////////////////////////////
+                small_func.clearScreen();
+                small_func.line();
+                System.out.println("Press 0 to go back.");
+                System.out.println();
+
+                //display what you can edit with numbers
+                displayList(index,allowedToEdit);
+
+                /////////////
+                ///select number
+                /////////////
+                small_func.line();
+
+                //get user input
+                System.out.println("Enter number:");
+                String userInput = scannerObject.nextLine();  // Read user input
+
+                //check input and convert to int
+                int intInput = 0;
+                try {
+                    intInput = Integer.parseInt(userInput);
+                    //break if needed
+                    if (intInput == 0) {
+                        break;
+                    }
+                    //check if should go back
+                    System.out.println(allowedToEdit.get(intInput - 1));
+                    if (allowedToEdit.get(intInput - 1) == "medication") {
+                        medicine(index);
+                        break;
+
+                    }
+
+
+                    //run code here to edit
+                    if (intInput <= infoTypes.size()) {
+                        editString(index,allowedToEdit, intInput);
+
+                    }
+                } catch (Exception e) {
                 }
-                if (intInput==0) {
-                    System.out.println("test");
-                    break;
-                }
 
-                //run code here to edit
-                if (intInput<=infoTypes.size()){
-                    //edit selected variable
-                    small_func.clearScreen();
-                    small_func.line();
-                    System.out.println("Current "+allowedToEdit.get(intInput-1)+" is "
-                            +json.get_string_i(index, allowedToEdit.get(intInput-1)));
 
-                    //get user input
-                    System.out.println("What would you like to edit it to:");
-                    String editTo = scannerObject.nextLine();  // Read user input
-
-                    //update json file
-                    String edit = allowedToEdit.get(intInput-1);
-                    json.updateVariable(index,edit,editTo);
-
-                }else{
-                }
-            } catch(Exception e){
             }
 
 
         }
-
-
     }
     public String optionDisplayEdit(){
         while(loop==0) {
@@ -247,6 +272,38 @@ public class Menu {
         small_func.line();
     }
 
+    public class DisplayTypes{
+        public void medicine(){
+
+
+
+        }
+        public void weight(int[] weights){
+            for (int i=0;i<weights.length;i++){
+                int weight = weights[i];
+
+                double loop = weight/10;
+
+                //set loop to 30 if ove 30
+                if (loop >30){ loop = 30; }
+
+                //print out menu
+                if (i != 0){System.out.println();}
+                System.out.print("["+(i+1)+"]"+weight+"kg \t");
+
+                for (int s=0;s<(loop);s++){
+                    System.out.print("*");
+
+                }
+
+
+            }
+
+
+
+        }
+    }
+
     //generates list of all patients
     public void displayPatients() {
         List<String> names = json.list_patients();
@@ -291,7 +348,7 @@ public class Menu {
             String name = scannerObject.nextLine();  // Read user input
 
             if (name.equals("0")){
-                return 0;
+                return -1;
             }
             //if name exists return index
             if (json.check_name(name) == true) {

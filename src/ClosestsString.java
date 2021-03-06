@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,7 +83,7 @@ public class ClosestsString {
 
     //return score list
     public List<Integer> listScore(String type, String i){
-        List<String> name = json.generate_list(type);
+        List<String> name = json.generateList(type);
         List<Integer> list = compareList(name, i);
         return list;
 

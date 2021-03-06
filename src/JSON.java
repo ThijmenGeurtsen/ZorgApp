@@ -63,15 +63,15 @@ public class JSON {
         return names;
     }
 
+    //gets list of medication
     public List<String> medicationList(int index){
         JSONArray jsonArray = get_json(json_file);
-        JSONObject profile = (JSONObject) jsonArray.get(0);
+        JSONObject profile = (JSONObject) jsonArray.get(index);
         List<String> medicine = (List<String>) profile.get("medicine");
-
 
         return medicine ;
     }
-    public List<String> generate_list(String type) {
+    public List<String> generateList(String type) {
         JSONArray jsonArray = get_json(json_file);
 
         //make list of names
@@ -81,6 +81,10 @@ public class JSON {
             list.add((String) profile.get(type));
         }
         return list;
+    }
+    public int[] getIntergerList(String type){
+
+        return new int[]{0, 0, 5};
     }
 
     public boolean check_name(String name) {
