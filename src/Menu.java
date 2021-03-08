@@ -317,7 +317,7 @@ public class Menu {
             System.out.println(test);
             //test.get(1);
             int index2 = 1;
-            var test2 = test.get(index2);
+            int test2 = test.get(index2);
 
 
             List<Integer> weights = Arrays.asList(50,60,70);
