@@ -18,12 +18,20 @@ public class CreateJSONFile {
         person1.put("firstName", "Lokesh");
         person1.put("lastName", "Gupta");
         person1.put("age", "55");
-        person1.put("weight", new int[]{50, 60, 80});
+        int[] test = {50,60,80};
+        person1.put("weight", Arrays.asList(50,60,70));
         person1.put("BMI", "22.2");
         //person1.put("length", "150");
 
-        List<String> list = Arrays.asList("altretamine","amiodarone tablet","amitriptyline tablet");
-        person1.put("medicine", list);
+        //for medicine
+        List<String> medList = Arrays.asList("altretamine","amiodarone tablet","amitriptyline tablet");
+        List<String> medListDescription = Arrays.asList("Altretamine is een antineoplastisch middel. Het werd in 1990 goedgekeurd door de Amerikaanse FDA","Amiodaron laat het hart langzamer en regelmatiger kloppen.","Amitriptyline verbetert uw stemming en maakt u minder angstig. Hierdoor heeft u minder last van klachten als piekeren, slaapproblemen en prikkelbaarheid. Ook werkt amitriptyline tegen pijnklachten.");
+        List<Integer> medListWeight = Arrays.asList(50,200,25);
+        JSONObject person1Med = new JSONObject();
+        person1Med.put("medicineWeight", medListWeight);
+        person1Med.put("medicine", medList);
+        person1Med.put("medicineDescription", medListDescription);
+        person1.put("medsInfo",person1Med);
 
 
         //Second Employee
@@ -31,7 +39,7 @@ public class CreateJSONFile {
         person2.put("firstName", "Brian");
         person2.put("lastName", "Schultz");
         person2.put("age", "53");
-        person2.put("weight", new int[]{50, 60, 80});
+        person2.put("weight", Arrays.asList(50,60,80));
         person2.put("BMI", "27.8");
         person2.put("length", "180");
 
@@ -41,7 +49,7 @@ public class CreateJSONFile {
         person3.put("firstName", "Thijmen");
         person3.put("lastName", "Geurtsen");
         person3.put("age", "19");
-        person3.put("weight", new int[]{120,115,110,105,100});
+        person3.put("weight", Arrays.asList(120,115,110,105,100));
         person3.put("BMI", "20.5");
         person3.put("length", "190");
 

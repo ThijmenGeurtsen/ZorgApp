@@ -1,17 +1,20 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         //create_json file
-        //CreateJSONFile Create = new CreateJSONFile();
-        //Create.create_json();
+        CreateJSONFile Create = new CreateJSONFile();
+        Create.create_json();
 
 
 
         //test
         Menu menu = new Menu();
-        int[] ints = {55, 60, 310};
-        menu.Display.weight(ints);
+        menu.Display.weight(0);
+
+
+        //menu.Display.medicine(0);
         //menu.displayPatientInfo(0);
         //menu.medicine(0);
         //menu.Edit.editMain(0, Arrays.asList("firstName", "lastName", "length", "weight", "age", "BMI", "medication"));

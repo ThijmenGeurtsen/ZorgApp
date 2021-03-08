@@ -64,12 +64,12 @@ public class JSON {
     }
 
     //gets list of medication
-    public List<String> medicationList(int index){
+    public List<String> getStringList(int index,String type){
         JSONArray jsonArray = get_json(json_file);
         JSONObject profile = (JSONObject) jsonArray.get(index);
-        List<String> medicine = (List<String>) profile.get("medicine");
+        List<String> output = (List<String>) profile.get(type);
 
-        return medicine ;
+        return output;
     }
     public List<String> generateList(String type) {
         JSONArray jsonArray = get_json(json_file);
@@ -82,11 +82,20 @@ public class JSON {
         }
         return list;
     }
-    public int[] getIntergerList(String type){
+    public List<Integer> getIntergerList(int index,String type){
+        JSONArray jsonArray = get_json(json_file);
+        JSONObject profile = (JSONObject) jsonArray.get(index);
+        List<Integer> output = (List<Integer>) profile.get(type);
 
-        return new int[]{0, 0, 5};
+        return output;
     }
+    public JSONObject getJSONObject(int index, String type){
+        JSONArray jsonArray = get_json(json_file);
+        JSONObject profile = (JSONObject) jsonArray.get(index);
+        JSONObject output = (JSONObject) profile.get(type);
 
+        return output;
+    }
     public boolean check_name(String name) {
         List<String> names = list_patients();
         boolean contain = names.contains(name);

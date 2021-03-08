@@ -1,9 +1,6 @@
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Menu {
@@ -110,7 +107,7 @@ public class Menu {
                     System.out.println("Press " + (i + 1) + " to edit "
                             + allowedToEdit.get(i)
                             + ": " +
-                            json.medicationList(index));
+                            json.getStringList(index,"medicine"));
 
                 } else {
                     System.out.println("Press " + (i + 1) + " to edit "
@@ -216,7 +213,7 @@ public class Menu {
         return null;
     }
     public void medicine(int index){
-        System.out.println(json.medicationList(index));
+        System.out.println(json.getStringList(index,"medicine"));
         small_func.line();
         String userInput = scannerObject.nextLine();  // Read user input
         small_func.line();
@@ -268,24 +265,75 @@ public class Menu {
         System.out.println("Weight: " + json.get_string_i(index, "weight"));
         System.out.println("Age: " + json.get_string_i(index, "age"));
         System.out.println("BMI: " + json.get_string_i(index, "BMI"));
-        System.out.println("Medication: " + json.medicationList(index));
+        System.out.println("Medication: " + json.getStringList(index,"medicine"));
         small_func.line();
     }
 
-    public class DisplayTypes{
+    public class EditTyped{
         public void medicine(){
 
-
-
         }
-        public void weight(int[] weights){
-            for (int i=0;i<weights.length;i++){
-                int weight = weights[i];
+        public class weight{
 
-                double loop = weight/10;
+            public void main(int index){
+
+            }
+            public int selectMedicine(int index){
+                List<String> medicine = json.getStringList(index,"medicine");
+                List<String> medDescription = json.getStringList(index,"medicineDescription");
+
+                for(int i=0;i<medicine.size();i++){
+                    if (i!=0) { System.out.println();}
+                    System.out.println("Medicine "+i+": "+medicine.get(i));
+                    System.out.println(medDescription.get(i));
+
+                }
+                return -1;
+            }
+        }
+    }
+    public class DisplayTypes{
+        public void medicine(int index){
+            //get all medicine info
+            JSONObject medList = json.getJSONObject(0,"medsInfo");
+
+            List<String> medicine = (List<String>) medList.get("medicine");
+            List<String> medicineDescription = (List<String>) medList.get("medicineDescription");
+            List<Integer> medicineWeight = (List<Integer>) medList.get("medicineWeight");
+
+
+            for(int i=0;i<medicine.size();i++) {
+                if (i != 0) {
+                    System.out.println();
+                }
+                System.out.println("Medicine " + (i+1) + ": "+medicineWeight.get(i)+"mg \t" + medicine.get(i));
+                System.out.println(medicineDescription.get(i));
+
+            }
+        }
+
+        public void weight(int index){
+            List<Integer> test = (json.getIntergerList(index,"weight"));
+            System.out.println(test);
+            //test.get(1);
+            int index2 = 1;
+            var test2 = test.get(index2);
+
+
+            List<Integer> weights = Arrays.asList(50,60,70);
+
+            for (int i=0;i<test.size();i++){
+                int weight = weights.get(1);
+
+                int loop = weight/10;
+
+                //if last digit is bigger than 5: loop+1
+                int lastDigit = weight % 10;
+                if (lastDigit>=5) {loop = loop+1;}
+
 
                 //set loop to 30 if ove 30
-                if (loop >30){ loop = 30; }
+                if (loop >30){ loop = 30;}
 
                 //print out menu
                 if (i != 0){System.out.println();}
