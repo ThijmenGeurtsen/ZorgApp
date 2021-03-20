@@ -8,12 +8,13 @@ public class ZorgApp {
 
         List<Profile> profiles = listInfo.listPatients();
 
-        Profile profile1 = profiles.get(1);
+        Profile profile1 = profiles.get(0);
 
         Menu menu = new Menu();
         int loop = 1;
         while(loop==1) {
-            profile1.editInfoMenu(Arrays.asList("firstName", "lastName", "age", "height", "BMI", "weight", "medicine"));
+            //profile1.editInfoMenu(Arrays.asList("firstName", "lastName", "age", "height", "BMI", "weight", "medicine"));
+            break;
         }
         while(true) {
             int selected = menu.loginAsEmployeePatient();

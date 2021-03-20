@@ -3,26 +3,56 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MakeLists {
+
     public List<Profile> listPatients() {
+        //generate medicine list
+        MakeLists listInfo = new MakeLists();
+        List<Medicine> meds = listInfo.listMedicine();
+
+
         Weight weight1 = new Weight(10,3,2020, 60);
         Weight weight2 = new Weight(11,3,2020, 65);
         Weight weight3 = new Weight(12,3,2020, 600);
+        List<Weight> weights = new ArrayList<>();
+        weights.add(weight1);
+        weights.add(weight2);
+        weights.add(weight3);
+
+        Medicine med1 = meds.get(0);
+        Medicine med2 = meds.get(1);
+        Medicine med3 = meds.get(2);
+        Medicine med4 = meds.get(3);
+        med1.setDosis(50);
+        med2.setDosis(200);
+        med3.setDosis(25);
+        med4.setDosis(20);
+        List<Medicine> medList = new ArrayList<>();
+        medList.add(med1);
+        medList.add(med2);
+        medList.add(med3);
+        medList.add(med4);
+
+
+
+
         Profile profile1 = new Profile(
                 "Lokesh"
                 , "Gupta"
                 , 80
                 , 160
                 , 20.5
-                , Arrays.asList(weight1,weight2,weight3));
+                , weights
+                , medList);
 
-
+        System.out.println(profile1.getMedicine());
         Profile profile2 = new Profile(
                 "Dwayne"
                 , "Woodward"
                 , 40
                 , 180
                 , 22
-                , Arrays.asList(weight1,weight2,weight3));
+                , weights
+                , medList);
 
         Profile profile3 = new Profile(
                 "Alanna"
@@ -30,7 +60,8 @@ public class MakeLists {
                 , 30
                 , 190
                 , 30
-                , Arrays.asList(weight1,weight2,weight3));
+                , weights
+                , medList);
 
         Profile profile4 = new Profile(
                 "Alanso" //Alonso
@@ -38,7 +69,8 @@ public class MakeLists {
                 , 30
                 , 190
                 , 30
-                , Arrays.asList(weight1,weight2,weight3));
+                , weights
+                , medList);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile1);
         profiles.add(profile2);

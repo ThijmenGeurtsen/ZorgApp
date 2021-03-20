@@ -22,8 +22,8 @@ public class Medicine {
         return dosis;
     }
 
-    public double setDosis() {
-        return dosis;
+    public void setDosis(double i) {
+        dosis=i;
     }
 }
 

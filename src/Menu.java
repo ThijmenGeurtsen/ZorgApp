@@ -1,9 +1,7 @@
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 
 public class Menu {
@@ -40,20 +38,46 @@ public class Menu {
         return 0;
     }
 
+    private int editOrDisplay() {
+        other.clearScreen();
+        other.line();
+        System.out.println("Press 0 to go back");
+        System.out.println();
+        System.out.println("Press 1 to display info patient");
+        System.out.println("Press 2 to edit info patient");
+        other.line();
+        System.out.println("Enter number:");
+        String userInput = scanner.nextLine();
+        try {
+            return Integer.parseInt(userInput);
+        } catch (Exception e) {
+        }
+        return -1;
+    }
+
+
 
     //////////////////////////////////////
     ///////Employee
     //////////////////////////////////////
     public void employeeLogin(List<Profile> profiles) {
+
         while (true) {
             int index = selectProfileEmployee(profiles);
             if (index == -1) {
                 break;
             }
             if (index != -2) {
-                Profile profile = profiles.get(index); // get profile
+                while (true) {
+                    Profile profile = profiles.get(index);
+                    int editDisplay = editOrDisplay();
+                    if (editDisplay == 0){break;}
+                    if (editDisplay == 1) {profile.displayInfo();}
+                    if (editDisplay == 2) {profile.editInfoMenu(Arrays.asList("firstName", "lastName", "age", "height", "BMI", "weight", "medicine"));}
 
-                profile.displayInfo();
+
+                }
+                // get profile
             }
 
         }
@@ -168,12 +192,23 @@ public class Menu {
     /////////////////////////////////////
     public void patientLogin(List<Profile> profiles) {
         while (true) {
+
             int index = selectProfilePatient(profiles);
+
             if (index == -1) {
                 break;
             }
-            Profile profile = profiles.get(index); // get profile
-            profile.displayInfo();
+            Profile profile = profiles.get(index);
+            while (true) {
+                int editDisplay = editOrDisplay();
+                if (editDisplay == 0){break;}
+                if (editDisplay == 1) {profile.displayInfo();}
+                if (editDisplay == 2) {profile.editInfoMenu(Arrays.asList("firstName"));}
+
+
+            }
+            // get profile
+
 
         }
     }
