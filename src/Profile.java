@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +20,6 @@ public class Profile {
     //  EditInfo //
     ///////////////
     private final Other other = new Other();
-
 
     public String getFirstAndLastName() {
         return (firstName + " " + lastName);
@@ -80,7 +80,7 @@ public class Profile {
     private final Scanner scanner = new Scanner(System.in);
 
 
-    Profile(String firstName, String lastName, int age, double height, double BMI, List<Weight> weight, List<Medicine> medicine) {
+    Profile(String firstName, String lastName, int age, double height, List<Weight> weight, List<Medicine> medicine) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

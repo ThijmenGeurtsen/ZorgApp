@@ -17,6 +17,7 @@ public class Other {
                 e.printStackTrace();
             }
         }
+
     public void promptEnterKey(){
         System.out.println("Press \"ENTER\" to continue...");
         scanner.nextLine();

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
     public Other other = new Other();
+    private Language lan = new Language();
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -15,13 +16,20 @@ public class Menu {
     public int loginAsEmployeePatient() {
         int loop = 0;
         while (loop == 0) {
+
             other.clearScreen();
             other.line();
-            System.out.println("as what would you like to login?");
+
+            String language = lan.getLanguage();
+            //login as
+            String loginAs = language.equals("NE") ? "Hoe wilt u inloggen?" : "as what would you like to login?";
+            System.out.println(loginAs);
+
+
             System.out.println();
             Scanner option = new Scanner(System.in);  // Create a Scanner object
             System.out.println("type 0 to login as a patient");
-            System.out.println("type 1 to login as a hospital employee");
+            System.out  .println("type 1 to login as a hospital employee");
             other.line();
 
             //get user input
