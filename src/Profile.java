@@ -14,8 +14,8 @@ public class Profile {
     private List<Medicine> medicine = new ArrayList<>();
 
     ///medicine
-    private final MakeLists listInfo = new MakeLists();
-    private final List<Medicine> meds = listInfo.listMedicine();
+    private DataHandler data = new DataHandler();
+    private List<Medicine> meds = data.loadMedicine();
     ////////////////
     //  EditInfo //
     ///////////////

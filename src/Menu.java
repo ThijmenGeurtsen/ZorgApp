@@ -14,36 +14,38 @@ public class Menu {
     //other
     //////////////////////////////
     public int loginAsEmployeePatient() {
-        int loop = 0;
-        while (loop == 0) {
+        while (true) {
 
             other.clearScreen();
             other.line();
 
             String language = lan.getLanguage();
+
             //login as
-            String loginAs = language.equals("NE") ? "Hoe wilt u inloggen?" : "as what would you like to login?";
-            System.out.println(loginAs);
-
-
+            String textLoginAs = language.equals("NE") ? "hoe wilt u inloggen?" : "as what would you like to login?";
+            System.out.println(textLoginAs);
             System.out.println();
             Scanner option = new Scanner(System.in);  // Create a Scanner object
-            System.out.println("type 0 to login as a patient");
-            System.out  .println("type 1 to login as a hospital employee");
+
+            String goBack = language.equals("NE") ? "Voer in 0 om af te sluiten en op te slaan" : "type 0 to exit and save";
+            System.out.println(goBack);
+            String textLoginPatient = language.equals("NE") ? "Voer in 1 om als patient in te loggen" : "type 0 to login as a patient";
+            System.out.println(textLoginPatient);
+            String textLoginEmployee = language.equals("NE") ? "Voer in 2 om als werknemer in te loggen" : "type 1 to login as a hospital employee";
+            System.out.println(textLoginEmployee);
             other.line();
 
             //get user input
-            System.out.println("Enter number:");
+            String enterNumber = language.equals("NE") ? "Voer het nummer in:" : "Enter number:";
+            System.out.println(enterNumber);
             String enteredOption = option.nextLine();
 
             //check user input
-            if (Arrays.asList("0", "1").contains(enteredOption)) {
+            if (Arrays.asList("0","1", "2").contains(enteredOption)) {
                 int output = Integer.parseInt(enteredOption);
                 return output;
             }
         }
-
-        return 0;
     }
 
     private int editOrDisplay() {

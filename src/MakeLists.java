@@ -40,7 +40,6 @@ public class MakeLists {
                 , "Gupta"
                 , 80
                 , 160
-                , 20.5
                 , weights
                 , medList);
 
@@ -50,7 +49,6 @@ public class MakeLists {
                 , "Woodward"
                 , 40
                 , 180
-                , 22
                 , weights
                 , medList);
 
@@ -59,7 +57,6 @@ public class MakeLists {
                 , "Villanueva"
                 , 30
                 , 190
-                , 30
                 , weights
                 , medList);
 
@@ -68,7 +65,6 @@ public class MakeLists {
                 , "Andrews"
                 , 30
                 , 190
-                , 30
                 , weights
                 , medList);
         List<Profile> profiles = new ArrayList<>();
