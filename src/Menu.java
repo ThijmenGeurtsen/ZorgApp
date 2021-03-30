@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 
 public class Menu {
-    public Other other = new Other();
+    public ToolBox other = new ToolBox();
     private Language lan = new Language();
 
     private final Scanner scanner = new Scanner(System.in);
@@ -29,9 +29,9 @@ public class Menu {
 
             String goBack = language.equals("NE") ? "Voer in 0 om af te sluiten en op te slaan" : "type 0 to exit and save";
             System.out.println(goBack);
-            String textLoginPatient = language.equals("NE") ? "Voer in 1 om als patient in te loggen" : "type 0 to login as a patient";
+            String textLoginPatient = language.equals("NE") ? "Voer in 1 om als patient in te loggen" : "type 1 to login as a patient";
             System.out.println(textLoginPatient);
-            String textLoginEmployee = language.equals("NE") ? "Voer in 2 om als werknemer in te loggen" : "type 1 to login as a hospital employee";
+            String textLoginEmployee = language.equals("NE") ? "Voer in 2 om als werknemer in te loggen" : "type 2 to login as a hospital employee";
             System.out.println(textLoginEmployee);
             other.line();
 
@@ -51,12 +51,20 @@ public class Menu {
     private int editOrDisplay() {
         other.clearScreen();
         other.line();
-        System.out.println("Press 0 to go back");
+        String language = lan.getLanguage();
+        String goBack = language.equals("NE") ? "Voer 0 om terug te gaan" : "Press 0 to go back";
+        System.out.println(goBack);
+
         System.out.println();
-        System.out.println("Press 1 to display info patient");
-        System.out.println("Press 2 to edit info patient");
+        String displayPatientInfo = language.equals("NE") ? "Voer 1 om patient info te laten" : "Press 1 to display info patient";
+        System.out.println(displayPatientInfo);
+
+        String displayEmployeeInfo = language.equals("NE") ? "Voer 2 om de patient te bewerken" : "Press 2 to edit info patient";
+        System.out.println(displayEmployeeInfo);
+
         other.line();
-        System.out.println("Enter number:");
+        String enterNumber = language.equals("NE") ? "Voer een nummer in:" : "Enter number:";
+        System.out.println(enterNumber);
         String userInput = scanner.nextLine();
         try {
             return Integer.parseInt(userInput);
@@ -106,10 +114,14 @@ public class Menu {
         displayPatientsList(names); //display patients
 
         //get user input
+        String language = lan.getLanguage();
         System.out.println();
-        System.out.println("Press 0 to go back.");
+        String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+        System.out.println(goBack);
         other.line();
-        System.out.println("Enter first three letter of the first name:");
+        String firstThreeChars = language.equals("EN") ? "Enter first three letter of the first name:" : "Voer de eerste drie letters in van de voornaam";
+        System.out.println(firstThreeChars);
+
         String userInput = scanner.nextLine();
 
 
@@ -131,15 +143,21 @@ public class Menu {
 
     private int selectName(List<Integer> indexNames, List<String> names) { // print out list of index given
         int userInputInt = -1;
+        String language = lan.getLanguage();
         while (true) {
             // print out list of options
             other.clearScreen();
             other.line();
-            System.out.println("press 0 to go back");
+            String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+            System.out.println(goBack);
             System.out.println();
             for (int i = 0; i < indexNames.size(); i++) {
                 String name = names.get(indexNames.get(i));
-                System.out.println("press " + (i + 1) + " for " + name);
+                if (language.equals("EN")) {
+                    System.out.println("press " + (i + 1) + " for " + name);
+                } else if (language.equals("NE")) {
+                    System.out.println("Voer " + (i + 1) + " in voor " + name);
+                }
             }
             other.line();
             String userInput = scanner.nextLine(); // get user input
@@ -228,9 +246,15 @@ public class Menu {
 
         other.clearScreen();
         other.line();
-        System.out.println("Press 0 to go back");
+
+        String language = lan.getLanguage();
+        String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+        System.out.print(goBack);
+
         System.out.println();
-        System.out.println("Enter firstname and last name:");
+
+        String enterFirstName = language.equals("EN") ? "Enter firstname and last name:" : "Voer de voornaam en achternaam in";
+        System.out.println(enterFirstName);
         other.line();
         String nameInput = scanner.nextLine();  // Read user input
 

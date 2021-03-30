@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.JobMediaSheetsCompleted;
 import java.util.List;
 
 public class ZorgApp {
@@ -5,14 +6,21 @@ public class ZorgApp {
     public static void main(String[] args) {
         Menu menu = new Menu();
         MakeLists listInfo = new MakeLists();
-        //List<Profile> profiles = listInfo.listPatients();
+        List<Medicine> medList = listInfo.listMedicine();
+
 
 
         DataHandler data = new DataHandler();
         List<Profile> profiles = data.loadPatients();
 
+
+
         Language lan = new Language();
         lan.updateLanguage();
+
+
+
+
 
 
         while (true) {

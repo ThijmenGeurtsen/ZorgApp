@@ -1,9 +1,4 @@
-import javax.print.attribute.standard.JobMediaSheetsCompleted;
-import java.io.File;
-import java.io.FileWriter;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.rmi.server.ExportException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,13 +30,13 @@ public class DataHandler {
                 List<Medicine> meds = profile.getMedicine();
                 List<Object> medsAppend = new ArrayList<>();
                 for (Medicine medicineObject : meds){
-                    String medName = medicineObject.getType();
+                    String medName = medicineObject.getName();
                     String medDesc = medicineObject.getDescription();
                     double medDosis = medicineObject.getDosis();
                     Object medicine = (medName+"-/"+medDesc+"-/"+medDosis+"-");
                     medsAppend.add(medicine);
 
-                    
+
                 }
                 info.add("medicine: "+ medsAppend);
 
@@ -210,10 +205,9 @@ public class DataHandler {
             FileWriter writer = new FileWriter("medicine.data");
 
             for (Medicine medicine : medList){
-                String medName = medicine.getType();
+                String medName = medicine.getName();
                 String medDesc = medicine.getDescription();
-                double medDosis = medicine.getDosis();
-                writer.write((medName+"-/"+medDesc+"-/"+medDosis+"-")+ System.lineSeparator());
+                writer.write((medName+"-/"+medDesc)+ System.lineSeparator());
             }
             writer.close();
 
@@ -229,34 +223,27 @@ public class DataHandler {
     }
 
     public List<Medicine> loadMedicine(){
-        try {
-            File file = new File("medicine.data");
-            Scanner myReader = new Scanner(file);
-            List<Medicine> medList = new ArrayList<>();
-            while (myReader.hasNextLine()){
-                String line = myReader.nextLine();
+        List<Medicine> medList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("medicine.data"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
                 Object[] parts = line.split("-/");
+
                 String medName = (String) parts[0];
                 String medDesc = (String) parts[1];
-                Double medDosis = Double.parseDouble((String) parts[2]);
                 Medicine medicine = new Medicine(medName,medDesc);
-                medicine.setDosis(medDosis);
-
                 medList.add(medicine);
 
-
-
-
             }
-            return medList;
-
-
-        }catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        Medicine medicine = medList.get(1);
+        System.out.print(medicine.getName());
+        return medList;
 
 
 
-        return null;
     }
 
 }

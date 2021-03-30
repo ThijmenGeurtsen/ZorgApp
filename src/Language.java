@@ -11,7 +11,7 @@ public class Language {
 
     public void updateLanguage(){
         while(true) {
-            Other other = new Other();
+            ToolBox other = new ToolBox();
             other.clearScreen();
             other.line();
             System.out.println("Press 0 to select english");

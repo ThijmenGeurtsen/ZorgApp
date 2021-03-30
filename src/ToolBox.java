@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Other {
+public class ToolBox {
     private Scanner scanner = new Scanner(System.in);
         public void clearScreen() {
             for (int i = 0; i < 20; i++) {
@@ -19,7 +19,11 @@ public class Other {
         }
 
     public void promptEnterKey(){
-        System.out.println("Press \"ENTER\" to continue...");
+        Language lan = new Language();
+        String language = lan.getLanguage();
+        String pressEnter = language.equals("EN") ? "Press \"ENTER\" to continue..." : "Voer \"ENTER\" in om verder te gaan...";
+
+        System.out.println(pressEnter);;
         scanner.nextLine();
     }
 

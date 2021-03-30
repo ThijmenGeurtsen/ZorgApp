@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,11 +14,14 @@ public class Profile {
 
     ///medicine
     private DataHandler data = new DataHandler();
-    private List<Medicine> meds = data.loadMedicine();
+    private List<Medicine> medicineList = data.loadMedicine();
+
+
+    private Language lan = new Language(); // language
     ////////////////
     //  EditInfo //
     ///////////////
-    private final Other other = new Other();
+    private ToolBox other = new ToolBox();
 
     public String getFirstAndLastName() {
         return (firstName + " " + lastName);
@@ -130,26 +132,40 @@ public class Profile {
     public void displayInfo() {
 
         while (true) {
+
+            String language = lan.getLanguage();
+
             List<Weight> weight = getWeight();
             Weight recentWeight = weight.get(weight.size() - 1);
             other.clearScreen();
             other.line();
-            System.out.println("Press 0 to go back\n");
-            System.out.println("Firstname: " + getFirstName());
-            System.out.println("Lastname: " + getLastName());
-            System.out.println("Age: " + getAge());
+            String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+            System.out.println(goBack+"\n");
+            String firstName = language.equals("EN") ? "Firstname: " : "Voornaam: ";
+            String lastName = language.equals("EN") ? "Lastname: " : "Achternaam: ";
+            String age = language.equals("EN") ? "Age: " : "Leeftijd: ";
+            String height = language.equals("EN") ? "Height: " : "Hoogte: ";
+            System.out.println(firstName+ getFirstName() );
+            System.out.println(lastName+ getLastName() );
+            System.out.println(age + getAge());
 
-            System.out.println("Height: " + getHeight() + "cm");
+            System.out.println(height+ getHeight() + "cm");
             System.out.println("BMI: " + getBMI());
 
-
-            System.out.println("Press 1 for more weight info" +
-                    "\n\tCurrent weight : " + recentWeight.getDate() + " " + recentWeight.getWeight() + "kg");
-            System.out.println("Press 2 for medicine info");
+            if (language.equals("NE")) {
+                System.out.println("Voer 1 in om alle gewichten te zien" +
+                        "\n\tMeest recente gewicht: " + recentWeight.getDate() + " " + recentWeight.getWeight() + "kg");
+            } else if (language.equals("EN")){
+                System.out.println("Press 1 for more weight info" +
+                        "\n\tCurrent weight : " + recentWeight.getDate() + " " + recentWeight.getWeight() + "kg");
+            }
+            String medsInfo = language.equals("EN") ? "Press 2 for medicine info" : "Voer 2 in voor medicijn informatie";
+            System.out.println(medsInfo);
 
 
             other.line();
-            System.out.println("Enter number:");
+            String enterNumber = language.equals("EN") ? "Enter Number:" : "Voer het nummer in:" ;
+            System.out.println(enterNumber);
             String userInput = scanner.nextLine();  // Read user input
             if (userInput.equals("0")) {
                 break;
@@ -172,11 +188,12 @@ public class Profile {
         List<Medicine> meds = getMedicine();
 
         //print out pretty menu
+        other.clearScreen();
         other.line();
         for (int i = 0; i < meds.size(); i++) {
             Medicine medSel = meds.get(i);
             String desc = medSel.getDescription();
-            String type = medSel.getType();
+            String type = medSel.getName();
             double dosis = medSel.getDosis();
 
             System.out.println("[" + (i + 1) + "] " + type + " " + dosis + "mg");
@@ -205,51 +222,94 @@ public class Profile {
 
     }
 
+    ///////////////
+    // EditInfo //
+    //////////////
     public void editInfoMenu(List<String> options) {
         other.clearScreen();
         other.line();
-        System.out.println("Press 0 to go back \n");
+        String language = lan.getLanguage();
+
+        String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+        System.out.println(goBack+"\n");
 
         for (int i = 0; i < options.size(); i++) {
             String option = options.get(i);
 
             //print out menu from list options
             switch (option) {
-                case "firstName":
-                    System.out.println("Press " + (i + 1) + " to edit " + "firstName: " + getFirstName());
+                case "firstName": {
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "firstName: " + getFirstName());
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om de voornaam te bewerken: " + getFirstName());
+                    }
+
                     break;
+                }
 
                 case "lastName":
-                    System.out.println("Press " + (i + 1) + " to edit " + "lastName: " + getLastName());
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "lastName: " + getLastName());
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om de achernaam te bewerken: " + getLastName());
+                    }
                     break;
 
                 case "age":
-                    System.out.println("Press " + (i + 1) + " to edit " + "age: " + getAge());
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "age: " + getAge());
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om de leeftijd te bewerken: " + getAge());
+                    }
                     break;
 
                 case "height":
-                    System.out.println("Press " + (i + 1) + " to edit " + "height: " + getHeight() + "cm");
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "height: " + getHeight() + "cm");
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om de hoogte te bewerken: " + getHeight());
+                    }
                     break;
 
                 case "BMI":
-                    System.out.println("Press " + (i + 1) + " to edit " + "BMI: " + getBMI());
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "BMI: " + getBMI());
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om de BMI te bewerken: " + getBMI());
+                    }
+
                     break;
 
                 case "weight":
                     List<Weight> weight = getWeight();
                     Weight recentWeight = weight.get(weight.size() - 1);
-                    System.out.println("Press " + (i + 1) + " to edit " + "weight, newest weight: " + recentWeight.getDate() + " " + recentWeight.getWeight() + "kg");
+
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "weight, newest weight: " +
+                                recentWeight.getDate() + " " + recentWeight.getWeight() + "kg");
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om het gewicht te bewerken" + ", nieuwste gewicht: " +
+                                recentWeight.getDate() + " " + recentWeight.getWeight() + "kg");
+                    }
+
                     break;
 
                 case "medicine":
-                    System.out.println("Press " + (i + 1) + " to edit " + "medicine");
+                    if (language.equals("EN")) {
+                        System.out.println("Press " + (i + 1) + " to edit " + "medicine");
+                    } else if (language.equals("NE")){
+                        System.out.println("Voer " + (i + 1) + " in om de medicijnen te bewerken");
+                    }
+
                     break;
 
             }
 
         }
         other.line();
-        System.out.println("Enter number:");
+        String enterNumber = language.equals("EN") ? "Enter Number:" : "Voer het nummer in:" ;
+        System.out.print(enterNumber);
         String userInput = scanner.nextLine();
         try {
             int userInputInt = Integer.parseInt(userInput);
@@ -296,9 +356,11 @@ public class Profile {
     }
 
     private void editFirstName() {
+        String language = lan.getLanguage();
         other.clearScreen();
         other.line();
-        System.out.println("Enter new firstName: ");
+        String newName = language.equals("EN") ? "Enter new firstName: " : "Voer een nieuwe voornaam in: ";
+        System.out.println(newName);
         String userInput = scanner.nextLine();
         setFirstName(userInput);
 
@@ -307,7 +369,9 @@ public class Profile {
     private void editLastName() {
         other.clearScreen();
         other.line();
-        System.out.println("Enter new lastName: ");
+        String language = lan.getLanguage();
+        String newLastName = language.equals("EN") ? "Enter new firstName: " : "Voer een nieuwe achternaam in: ";
+        System.out.print(newLastName);
         String userInput = scanner.nextLine();
         setLastName(userInput);
 
@@ -315,9 +379,11 @@ public class Profile {
 
     private void editAge() {
         while (true) {
+            String language = lan.getLanguage();
             other.clearScreen();
             other.line();
-            System.out.println("Enter new age: ");
+            String newAge = language.equals("EN") ? "Enter new age: " : "Voer een nieuwe leeftijd in: ";
+            System.out.println(newAge);
             String userInput = scanner.nextLine();
             try {
                 int userInputInt = Integer.parseInt(userInput);
@@ -330,11 +396,13 @@ public class Profile {
 
     }
 
-    private void editHeight() {
+    private void editHeight(){
         while (true) {
+            String language = lan.getLanguage();
             other.clearScreen();
             other.line();
-            System.out.println("Enter new height: ");
+            String newHeight = language.equals("EN") ? "Enter new height: " : "Voer een nieuwe hoogte in: ";
+            System.out.print(newHeight);
             String userInput = scanner.nextLine();
             try {
                 double userInputDouble = Integer.parseInt(userInput);
@@ -351,7 +419,10 @@ public class Profile {
         while (true) {
             other.clearScreen();
             other.line();
-            System.out.println("Enter new BMI: ");
+            String language = lan.getLanguage();
+            String newBMI = language.equals("EN") ? "Enter new BMI: " : "Voer een nieuwe BMI in: ";
+            System.out.println(newBMI);
+
             String userInput = scanner.nextLine();
             try {
                 double userInputDouble = Integer.parseInt(userInput);
@@ -365,15 +436,17 @@ public class Profile {
     }
 
     private void menuWeights() {
+        String language = lan.getLanguage();
         while (true) {
             other.clearScreen();
             other.line();
             displayWeight();
             System.out.println();
-            System.out.println("press 0 to go back");
-            System.out.println("Press 1 to add a new weight");
+            String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+            System.out.println(goBack);
             other.line();
-            System.out.println("Enter number:");
+            String enterNumber = language.equals("EN") ? "Enter Number:" : "Voer het nummer in:" ;
+            System.out.println(enterNumber);
             String userInput = scanner.nextLine();  // Read user input
 
             if (userInput.equals("0")) {
@@ -441,6 +514,7 @@ public class Profile {
 
     //edit medicine
     public void editMedicine() {
+        String language = lan.getLanguage();
         while (true) {
             List<Medicine> meds = getMedicine();
             menuMedicine(); // print out menu medicine
@@ -454,54 +528,17 @@ public class Profile {
                     break;
                 }
 
+                int index = userInputInt - 1;
                 if (userInputInt < (meds.size() + 1)) {
-                    while (true) {
-                        other.clearScreen();
-                        other.line();
-                        int index = userInputInt - 1;
-                        Medicine selMedicine = meds.get(index);
-                        System.out.println("Selected medicine " + selMedicine.getType() + " " + selMedicine.getDosis() + "mg");
-                        System.out.println("Press 0 to go back");
-                        System.out.println("Press 1 to edit the dosis");
-                        System.out.println("Press 2 to delete the medicine");
-                        other.line();
-                        System.out.println("Enter number:");
-                        String input = scanner.nextLine();
 
-                        if (input.equals("0")) {
-                            break;
-                        }
-
-                        //set new dosis
-                        if (input.equals("1")) {
-                            while (true) {
-                                System.out.println("Enter new dosis:");
-                                String newDosis = scanner.nextLine(); // get userinput newdosis
-                                try {
-                                    //set new dosis and return
-                                    double newDosisDouble = Double.parseDouble(newDosis);
-                                    selMedicine.setDosis(newDosisDouble);
-                                    meds.set(index, selMedicine);
-                                    setMedicine(meds);
-                                    break;
-
-
-                                } catch (Exception e) {
-                                }
-                            }
-                            break;
-                        }
-
-                        if (input.equals("2")) {
-                            meds.remove(index);
-                            break;
-                        }
-                    }
+                    editSelectedMedicine(index, meds);
 
 
                     //add new medicine
-                } else if (userInputInt == (meds.size() + 1)) {
+                }
+                if (index == (meds.size())) {
                     Medicine outputMedicine = selectMedicine();
+                    System.out.print(outputMedicine);
                     meds.add(outputMedicine);
                     setMedicine(meds);
 
@@ -510,25 +547,90 @@ public class Profile {
 
 
             } catch (Exception e) {
+                System.out.print(e);
             }
         }
     }
 
+    public void editSelectedMedicine(int index,  List<Medicine> meds) {
+        String language = lan.getLanguage();
+        while (true) {
+            other.clearScreen();
+            other.line();
+            Medicine selMedicine = meds.get(index);
+            String selectedMedicine = language.equals("EN") ? "Selected medicine " : "geselecteerde medicijn ";
+            System.out.println(selectedMedicine + selMedicine.getName() + " " + selMedicine.getDosis() + "mg");
+
+            String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+            System.out.println(goBack);
+
+            String editDosis = language.equals("EN") ? "Press 1 to edit the dosis" : "Voer 1 om de dosis te bewerken";
+            System.out.println(editDosis);
+
+            String deleteMedicine = language.equals("EN") ? "Press 2 to delete the medicine" : "Voer 2 in om het medicijn te verwijderen";
+            System.out.println(deleteMedicine);
+
+            other.line();
+            String enterNumber = language.equals("EN") ? "Enter Number:" : "Voer het nummer in:" ;
+            System.out.print(enterNumber);
+            String input = scanner.nextLine();
+
+            if (input.equals("0")) {
+                break;
+            }
+
+            //set new dosis
+            if (input.equals("1")) {
+
+                while (true) {
+                    String enterDosis = language.equals("EN") ? "Enter new dosis:" : "Voer een nieuwe dosis in:" ;
+                    System.out.println(enterDosis);
+                    String newDosis = scanner.nextLine(); // get userinput newdosis
+                    try {
+                        //set new dosis and return
+                        double newDosisDouble = Double.parseDouble(newDosis);
+                        selMedicine.setDosis(newDosisDouble);
+                        meds.set(index, selMedicine);
+                        setMedicine(meds);
+                        break;
+
+
+                    } catch (Exception e) {
+                    }
+                }
+                break;
+            }
+
+            if (input.equals("2")) {
+                meds.remove(index);
+                break;
+            }
+        }
+
+    }
+
     public void menuMedicine() {
         List<Medicine> meds = getMedicine();
+        String language = lan.getLanguage();
 
         //print out pretty menu
         other.clearScreen();
         other.line();
-        System.out.println("Press 0 to go back");
+        String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+        System.out.print(goBack);
+
         System.out.println();
         for (int i = 0; i < meds.size(); i++) {
             Medicine medSel = meds.get(i);
             String desc = medSel.getDescription();
-            String type = medSel.getType();
+            String type = medSel.getName();
             double dosis = medSel.getDosis();
 
-            System.out.println("press " + (i + 1) + " to edit " + type + " " + dosis + "mg");
+            if (language.equals("EN")) {
+                System.out.println("Press " + (i + 1) + " to edit " + type + " " + dosis + "mg");
+            } else if(language.equals("NE")){
+                System.out.println("Voer " + (i + 1) + " in om " + type + " " + dosis + "mg"+" te bewerken");
+            }
 
             //print description
             String[] descLines = desc.split("(?<=\\G.{1})");
@@ -545,29 +647,48 @@ public class Profile {
             }
             System.out.println("\n");
         }
-        System.out.println("Press " + (meds.size() + 1) + " to add a new medicine");
+        if (language.equals("EN")) {
+            System.out.println("Press " + (meds.size() + 1) + " to add a new medicine");
+        } else if(language.equals("NE")){
+            System.out.println("Druk " + (meds.size() + 1) + " om een nieuw medicijn toe te voegen");
+        }
         other.line();
     }
 
     //select medicine
     public Medicine selectMedicine() {
+        String language = lan.getLanguage();
         while (true) {
             other.clearScreen();
             other.line();
-            for (int i = 0; i < meds.size(); i++) {
-                Medicine selMedicine = meds.get(i);
-                System.out.println("Press " + i + " to add medicine " + selMedicine.getType());
+            String goBack = language.equals("EN") ? "Press 0 to go back" : "Voer 0 in om terug te gaan";
+            System.out.println(goBack);
+            for (int i = 0; i < medicineList.size(); i++) {
+                Medicine selMedicine = medicineList.get(i);
+                if (language.equals("EN")) {
+                    System.out.println("Press " + (1+1) + " to add medicine " + selMedicine.getName());
+                } else if (language.equals("NE")){
+                    System.out.println("Voer " + (i+1)+ " in om medicijn " + selMedicine.getName()+" toe te voegen ");
+
+                }
+
 
 
             }
             other.line();
-            System.out.println("Enter number");
+            String enterNumber = language.equals("EN") ? "Enter Number:" : "Voer het nummer in:" ;
+            System.out.println(enterNumber);
             String userInput = scanner.nextLine();
+            if (userInput.equals("0")){ break;}
             try {
-                int userInputInt = Integer.parseInt(userInput);
-                Medicine output = meds.get(userInputInt);
+                int userInputInt = (Integer.parseInt(userInput)-1);
+                Medicine output = medicineList.get(userInputInt);
                 while (true) {
-                    System.out.println("Set dosis for " + output.getType() + ":");
+                    if (language.equals("EN")) {
+                        System.out.println("Set dosis for " + output.getName() + ":");
+                    } else if(language.equals("NE")){
+                        System.out.println("Zet de dosering voor " + output.getName() + ":");
+                    }
                     String userInputDosis = scanner.nextLine();
                     double userInputDosisDouble = Integer.parseInt(userInputDosis);
                     output.setDosis(userInputDosisDouble);
@@ -584,6 +705,7 @@ public class Profile {
         }
 
 
+        return null;
     }
 
 

@@ -14,7 +14,7 @@ public class Medicine {
         return desc;
     }
 
-    public String getType() {
+    public String getName() {
         return name;
     }
 
